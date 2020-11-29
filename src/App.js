@@ -1,7 +1,9 @@
 import './App.css';
+import './Sidebar.css';
 import { Component } from 'react'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'; //https://www.npmjs.com/package/google-maps-react
 import axios from 'axios' //https://www.npmjs.com/package/axios used for making requests
+import Sidebar from './SideBar';
 
 class App extends Component {
   state = {
@@ -34,7 +36,7 @@ class App extends Component {
         })
       })
       .catch(error => {
-        console.log(error)
+        alert(error + ' could not load data from four square, check response and try again')
       })
 
   }
@@ -65,44 +67,50 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title"> Maps project </h1>
-        </header>
-        <div className="map">
-          {/* renders our map on to the page with props via google-maps-react package https://www.npmjs.com/package/google-maps-react*/}
-          <Map
-            google={this.props.google}
-            zoom={12}
-            initialCenter={{
-              lat: 42.33779017328514,
-              lng: -71.07536209153098
-            }}
-            onclick={this.onMapClicked}
-          >
-            {this.state.venues
-              .map(myVenue => (
-                <Marker
-                  key={myVenue.venue.id}
-                  position={{ lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng }}
-                  name={myVenue.venue.name}
-                  title={myVenue.venue.name}
-                  onClick={this.onMarkerClick}>
-                </Marker>
-              ))
-            }
-            <InfoWindow
-              visible={this.state.showingInfoWindow}
-              marker={this.state.activeMarker}
-              onClose={this.onInfoWindowClose}
-            >
-              <div>
-                <p>{this.state.selectedPlace.name}</p>
-              </div>
-            </InfoWindow>
+      <div className="App" id="outer-container">
+          <header className="App-header">
+            <h1 className="App-title"> Maps project </h1>
+          </header>
+        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+        <div id='page-wrap'>
+        
 
-          </Map>
+          <div className="map">
+            {/* renders our map on to the page with props via google-maps-react package https://www.npmjs.com/package/google-maps-react*/}
+            <Map
+              google={this.props.google}
+              zoom={12}
+              initialCenter={{
+                lat: 42.33779017328514,
+                lng: -71.07536209153098
+              }}
+              onclick={this.onMapClicked}
+            >
+              {this.state.venues
+                .map(myVenue => (
+                  <Marker
+                    key={myVenue.venue.id}
+                    position={{ lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng }}
+                    name={myVenue.venue.name}
+                    title={myVenue.venue.name}
+                    onClick={this.onMarkerClick}>
+                  </Marker>
+                ))
+              }
+              <InfoWindow
+                visible={this.state.showingInfoWindow}
+                marker={this.state.activeMarker}
+                onClose={this.onInfoWindowClose}
+              >
+                <div>
+                  <p>{this.state.selectedPlace.name}</p>
+                </div>
+              </InfoWindow>
+
+            </Map>
+          </div>
         </div>
+
 
       </div>
 
