@@ -71,7 +71,9 @@ class App extends Component {
           <header className="App-header">
             <h1 className="App-title"> Maps project </h1>
           </header>
-        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+        <Sidebar 
+        pageWrapId={'page-wrap'} outerContainerId={'outer-container'}
+        venues={this.state.venues} />
         <div id='page-wrap'>
         
 
@@ -86,6 +88,7 @@ class App extends Component {
               }}
               onclick={this.onMapClicked}
             >
+              {/* For each venue in the response from the getVenues func we create a marker. We pass details from the venues state  */}
               {this.state.venues
                 .map(myVenue => (
                   <Marker
@@ -97,6 +100,7 @@ class App extends Component {
                   </Marker>
                 ))
               }
+              {/* We add a info window to the active marker displaying the location name from state */}
               <InfoWindow
                 visible={this.state.showingInfoWindow}
                 marker={this.state.activeMarker}

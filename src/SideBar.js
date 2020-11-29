@@ -3,19 +3,32 @@ import React, { Component } from 'react'
 
  
 class Sidebar extends Component {
-  showSettings (event) {
-    event.preventDefault();
+  // showSettings (event) {
+  //   event.preventDefault();
     
-  }
+  // }
  
   render () {
-    // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     return (
       <Menu>
-        <a id="home" className="menu-item" href="/">Home</a>
-        <a id="about" className="menu-item" href="/about">About</a>
-        <a id="contact" className="menu-item" href="/contact">Contact</a>
-        <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+        <div>
+          <input></input>
+        </div>
+        <div>
+          <ol>
+            {
+            //create list item for each venue
+            this.props.venues
+            .map(venue =>(
+              <li key={venue.venue.id}>
+                {venue.venue.name}
+               </li> 
+            ))
+            
+            
+            }
+            </ol>
+        </div>
       </Menu>
     );
   }
